@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Authors</h1>
+
+    <!-- Form to add a new author -->
+    <form method="POST" action="{{ url_for('authors.authors_list') }}" class="mb-4">
+        <div class="form-row">
+            <div class="col">
+                <input type="text" class="form-control" name="first_name" placeholder="First Name" required>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" name="last_name" placeholder="Last Name" required>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Add Author</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Table to display all authors -->
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Author ID</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for author in all_authors %}
+            <tr>
+                <td>{{ author.author_id }}</td>
+                <td>{{ author.first_name }}</td>
+                <td>{{ author.last_name }}</td>
+                <td>
+                    <!-- Update button -->
+                    <a href="{{ url_for('authors.update_author', author_id=author.author_id) }}" class="btn btn-warning btn-sm">Update</a>
+
+                    <!-- Delete button -->
+                    <form action="{{ url_for('authors.delete_author', author_id=author.author_id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this author?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

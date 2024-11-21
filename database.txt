@@ -1,0 +1,12 @@
+Table books {
+  book_id int [pk, ai]
+  book_name varchar(45)
+  page_count int
+  author_id int [ref: > authors.author_id]
+}
+
+Table authors {
+  author_id int [pk, ai]
+  first_name varchar(45)
+  last_name varchar(45)
+}
